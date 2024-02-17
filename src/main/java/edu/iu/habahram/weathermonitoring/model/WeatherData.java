@@ -11,12 +11,14 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class WeatherData implements Subject{
     private List<Observer> observers;
+    private List<Observer> subscribedObservers;
     private float temperature;
     private float humidity;
     private float pressure;
 
     public WeatherData() {
         this.observers = new ArrayList<>();
+        this.subscribedObservers = new ArrayList<>();
         startMeasuring();
     }
 
@@ -41,6 +43,7 @@ public class WeatherData implements Subject{
        int i = observers.indexOf(observer);
        if(i >= 0) {
            observers.remove(observer);
+           subscribedObservers.remove(observer);
        }
     }
 
@@ -54,6 +57,16 @@ public class WeatherData implements Subject{
     @Override
     public List<Observer> getObservers() {
         return observers;
+    }
+
+    public void subscribe(Observer observer) {
+        if (!subscribedObservers.contains(observer)) {
+            subscribedObservers.add(observer);
+        }
+    }
+
+    public void unsubscribe (Observer observer) {
+        subscribedObservers.remove(observer);
     }
 
     public void measurementChanged() {

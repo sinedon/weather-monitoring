@@ -9,12 +9,6 @@ public class CurrentConditionDisplay
     private float humidity;
     private float pressure;
 
-    private Subject weatherData;
-
-    public CurrentConditionDisplay(Subject weatherData) {
-        this.weatherData = weatherData;
-    }
-
     @Override
     public String display() {
         String html = "";
@@ -48,13 +42,5 @@ public class CurrentConditionDisplay
          this.temperature = temperature;
          this.humidity = humidity;
          this.pressure = pressure;
-    }
-
-    public void subscribe() {
-        weatherData.registerObserver(this);
-    }
-
-    public void unsubscribe() {
-        weatherData.removeObserver(this);
     }
 }
